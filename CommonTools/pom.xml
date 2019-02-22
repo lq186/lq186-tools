@@ -5,16 +5,24 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>lq186-tools</groupId>
-    <artifactId>common-utils</artifactId>
+    <artifactId>common-tools</artifactId>
     <version>0.1</version>
-
-    <description>通用工具类集合</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+
+        <utils.version>0.1</utils.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>lq186-tools</groupId>
+            <artifactId>common-utils</artifactId>
+            <version>${utils.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -25,6 +33,21 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.lq186.tools.BootstrapApp</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                    <classDirectory></classDirectory>
                 </configuration>
             </plugin>
         </plugins>

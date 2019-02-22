@@ -14,18 +14,22 @@
     limitations under the License.
 */
 /*
-    FileName: DateUtils.java
-    Date: 2019/2/21
+    FileName: Print.java
+    Date: 2019/2/22
     Author: lq
 */
-package com.lq186.tools.util;
+package com.lq186.tools.out;
 
-import java.util.Date;
+import com.lq186.tools.util.StringUtils;
 
-public final class DateUtils {
+public final class Print {
 
-    public static final int getMonth(Date date) {
-        return 0;
+    public static final void printLine(String ... msgs) {
+        System.out.println(StringUtils.join(msgs));
+    }
+
+    public static void printException(Exception e) {
+        e.printStackTrace();
     }
 
 }

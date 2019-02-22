@@ -14,18 +14,28 @@
     limitations under the License.
 */
 /*
-    FileName: DateUtils.java
-    Date: 2019/2/21
+    FileName: StringUtils.java
+    Date: 2019/2/22
     Author: lq
 */
 package com.lq186.tools.util;
 
-import java.util.Date;
+public final class StringUtils {
 
-public final class DateUtils {
+    public static final String join(String ... strings) {
+        if (null != strings && strings.length > 0) {
+            if (strings.length == 1) {
+                return strings[0];
+            }
 
-    public static final int getMonth(Date date) {
-        return 0;
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String s : strings) {
+                stringBuilder.append(s);
+            }
+            return stringBuilder.toString();
+        } else {
+            return "";
+        }
     }
 
 }

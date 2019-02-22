@@ -14,18 +14,15 @@
     limitations under the License.
 */
 /*
-    FileName: DateUtils.java
-    Date: 2019/2/21
+    FileName: DefaultNoneCmdExecImpl.java
+    Date: 2019/2/22
     Author: lq
 */
-package com.lq186.tools.util;
+package com.lq186.tools.exec;
 
-import java.util.Date;
+public class DefaultNoneCmdExecImpl implements ICmdExec {
 
-public final class DateUtils {
+    public void exec(String[] args) {
 
-    public static final int getMonth(Date date) {
-        return 0;
     }
-
 }
