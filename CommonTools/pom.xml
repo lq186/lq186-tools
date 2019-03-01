@@ -47,7 +47,6 @@
                             <classpathPrefix>lib/</classpathPrefix>
                         </manifest>
                     </archive>
-                    <classDirectory></classDirectory>
                 </configuration>
             </plugin>
         </plugins>

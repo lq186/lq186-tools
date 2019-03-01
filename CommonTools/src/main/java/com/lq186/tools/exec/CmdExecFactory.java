@@ -36,6 +36,8 @@ public final class CmdExecFactory {
                 return new CopyFilesCmdExecImpl();
             case "mkdir":
                 return new MakeDirectoryCmdExecImpl();
+            case "cpjar":
+                return new CopyMavenJarExecImpl();
             default:
                 return DefaultNoneCmdExecHolder.CMD_EXEC;
         }
