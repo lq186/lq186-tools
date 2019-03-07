@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>lq186-tools</groupId>
-    <artifactId>common-tools</artifactId>
+    <groupId>lq186-common</groupId>
+    <artifactId>tools</artifactId>
     <version>1.0</version>
 
     <properties>
@@ -18,7 +18,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>lq186-tools</groupId>
+            <groupId>lq186-common</groupId>
             <artifactId>common</artifactId>
             <version>${utils.version}</version>
         </dependency>
@@ -42,7 +42,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.lq186.tools.BootstrapApp</mainClass>
+                            <mainClass>com.lq186.common.BootstrapApp</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
                         </manifest>
