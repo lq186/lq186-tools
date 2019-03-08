@@ -30,6 +30,8 @@ public final class ResultBean implements Serializable {
 
     private Object data; // 数据
 
+    private String url; // 地址
+
     public ResultBean(int code) {
         this.code = code;
     }
@@ -67,5 +69,13 @@ public final class ResultBean implements Serializable {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

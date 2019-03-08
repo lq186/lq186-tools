@@ -14,26 +14,14 @@
     limitations under the License.
 */
 /*
-    FileName: Parameter.java
-    Date: 2019/3/4
+    FileName: Attribute.java
+    Date: 2019/3/8
     Author: lq
 */
 package com.lq186.common.consts;
 
-public final class Parameter {
+public final class Attribute {
 
-    public static final String TOKEN = "token";
-
-    public static final String PAGE = "page";
-
-    public static final String SIZE = "size";
-
-    public static final String SORT = "sort";
-
-    public static final String DIRECTION = "direction";
-
-    public static final String LANGUAGE = "language";
-
-    public static final String TRACE = "trace";
+    public static final String STATUS_CODE = "javax.servlet.error.status_code";
 
 }
