@@ -38,7 +38,7 @@ public abstract class BaseErrorController implements ErrorController {
 
     private static final Log log = Log.getLog(BaseErrorController.class);
 
-    private static final String ERROR_PATH = "/error";
+    protected static final String ERROR_PATH = "/error";
 
     protected abstract ErrorAttributes getErrorAttributes();
 
