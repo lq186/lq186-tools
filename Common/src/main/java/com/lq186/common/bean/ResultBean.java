@@ -32,6 +32,8 @@ public final class ResultBean implements Serializable {
 
     private String url; // 地址
 
+    private String error; // 错误信息
+
     public ResultBean(int code) {
         this.code = code;
     }
@@ -77,5 +79,13 @@ public final class ResultBean implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

@@ -20,7 +20,6 @@
 */
 package com.lq186.common.springboot.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lq186.common.bean.ResultBean;
 import com.lq186.common.consts.Attribute;
 import com.lq186.common.consts.Parameter;
@@ -42,8 +41,6 @@ public abstract class BaseErrorController implements ErrorController {
 
     protected abstract ErrorAttributes getErrorAttributes();
 
-    protected abstract ObjectMapper getObjectMapper();
-
     @Override
     public String getErrorPath() {
         return ERROR_PATH;
@@ -55,8 +52,7 @@ public abstract class BaseErrorController implements ErrorController {
             statusCode = 500;
         }
         ResultBean resultBean = new ResultBean(statusCode);
-        resultBean.setUrl(request.getRequestURL().toString());
-        resultBean.setMsg(getErrorMsg(request));
+        addErrorMsg(request, resultBean);
         return resultBean;
     }
 
@@ -68,17 +64,19 @@ public abstract class BaseErrorController implements ErrorController {
         return !"false".equals(parameter.toLowerCase());
     }
 
-    private String getErrorMsg(HttpServletRequest request) {
+    private void addErrorMsg(HttpServletRequest request, ResultBean resultBean) {
         boolean includeStackTrace = enableTrace(request);
         ServletWebRequest servletWebRequest = new ServletWebRequest(request);
         Map<String, Object> errorMap = getErrorAttributes().getErrorAttributes(servletWebRequest, includeStackTrace);
-        String errorMsg = MessageKey.SYSTEM_ERROR;
-        try {
-            errorMsg = getObjectMapper().writeValueAsString(errorMap);
-        } catch (Exception e) {
-            log.error("错误信息转JSON字符串异常。", e);
-        }
-        return errorMsg;
+
+        Object error = errorMap.getOrDefault("error", MessageKey.SYSTEM_ERROR);
+        resultBean.setError(String.valueOf(error));
+
+        Object message = errorMap.getOrDefault("message", MessageKey.SYSTEM_ERROR);
+        resultBean.setMsg(String.valueOf(message));
+
+        Object url = errorMap.getOrDefault("path", request.getRequestURL().toString());
+        resultBean.setUrl(String.valueOf(url));
     }
 
 }
