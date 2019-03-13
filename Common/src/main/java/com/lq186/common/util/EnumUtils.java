@@ -34,11 +34,12 @@ public final class EnumUtils {
                     Field codeField = result.getClass().getDeclaredField(fieldName);
                     boolean isAccessible = codeField.isAccessible();
                     codeField.setAccessible(true);
-                    String fileValue = String.valueOf(codeField.get(result));
-                    if (fileValue.equals(value)) {
+                    Object fieldValue = codeField.get(result);
+                    if (value == fieldValue || String.valueOf(value).equals(String.valueOf(fieldValue))) {
                         codeField.setAccessible(isAccessible);
                         return (T) result;
                     }
+                    codeField.setAccessible(isAccessible);
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
