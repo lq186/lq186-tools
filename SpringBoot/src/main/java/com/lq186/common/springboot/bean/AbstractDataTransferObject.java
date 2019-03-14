@@ -29,6 +29,7 @@ public abstract class AbstractDataTransferObject<T extends EntityId> implements 
 
     public AbstractDataTransferObject(T entity) {
         BeanUtils.copyProperties(entity, this);
+        afterProperties(entity);
     }
 
     public T toEntity() throws RuntimeException {
