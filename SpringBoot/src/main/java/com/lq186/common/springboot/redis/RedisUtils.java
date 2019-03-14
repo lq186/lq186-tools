@@ -97,6 +97,17 @@ public final class RedisUtils {
         }
     }
 
+    public static final boolean delete(String redisKey) {
+        log.debugf("Call delete key [%s] from redis.", redisKey);
+        return redisTemplate.delete(redisKey);
+    }
+
+    public static final long delete(Collection<String> redisKey) {
+        log.debugf("Call delete key [%s] from redis.", redisKey);
+        Long count = redisTemplate.delete(redisKey);
+        return null == count ? 0 : count;
+    }
+
     public static final boolean setValueWithExpireSeconds(String redisKey, Object value, long expireSeconds) {
         if (StringUtils.isBlank(redisKey)) {
             log.debugf("Redis key [%s] is blank", redisKey);
