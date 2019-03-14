@@ -39,7 +39,9 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.support.GenericConversionService;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -95,13 +97,12 @@ public final class ConfigUtils {
     public static final RedisTemplate<String, Object> getRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
-        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-        jackson2JsonRedisSerializer.setObjectMapper(getObjectMapper());
+        JdkSerializationRedisSerializer jdkSerializationRedisSerializer = new JdkSerializationRedisSerializer();
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
         template.setKeySerializer(stringRedisSerializer); // key采用String的序列化方式
         template.setHashKeySerializer(stringRedisSerializer); // hash的key也采用String的序列化方式
-        template.setValueSerializer(jackson2JsonRedisSerializer); // value序列化方式采用jackson
-        template.setHashValueSerializer(jackson2JsonRedisSerializer); // hash的value序列化方式采用jackson
+        template.setValueSerializer(jdkSerializationRedisSerializer); // value序列化方式采用jackson
+        template.setHashValueSerializer(jdkSerializationRedisSerializer); // hash的value序列化方式采用jackson
         template.afterPropertiesSet();
         RedisUtils.setRedisTemplate(template);
         return template;
