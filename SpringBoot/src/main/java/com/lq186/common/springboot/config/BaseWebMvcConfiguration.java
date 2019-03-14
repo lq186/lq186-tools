@@ -22,6 +22,7 @@ package com.lq186.common.springboot.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
@@ -34,6 +35,14 @@ public abstract class BaseWebMvcConfiguration extends WebMvcConfigurationSupport
     @Override
     protected void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.addAll(ConfigUtils.getHttpMessageConverters(getObjectMapper()));
+    }
+
+    @Override
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/", "classpath:/public/"
+                        , "classpath:/frontend/static/", "classpath:/frontend/public/");
+        super.addResourceHandlers(registry);
     }
 
     @Override
