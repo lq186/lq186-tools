@@ -32,7 +32,7 @@ public abstract class AbstractDataTransferObject<T extends EntityId, DTO extends
         try {
             T instanceOfT = classOfT.newInstance();
             BeanUtils.copyProperties(this, instanceOfT);
-            this.afterProperties((DTO) this);
+            this.toEntityAfterProperties(instanceOfT);
             return instanceOfT;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -42,12 +42,15 @@ public abstract class AbstractDataTransferObject<T extends EntityId, DTO extends
     @Override
     public DTO fromEntity(T entity) {
         BeanUtils.copyProperties(entity, this);
-        this.afterProperties(entity);
+        this.fromEntityAfterProperties(entity);
         return (DTO) this;
     }
 
-    protected abstract void afterProperties(T entity);
+    protected void fromEntityAfterProperties(T entity) {
 
-    protected abstract void afterProperties(DTO dto);
+    }
 
+    protected void toEntityAfterProperties(T entity) {
+
+    }
 }
