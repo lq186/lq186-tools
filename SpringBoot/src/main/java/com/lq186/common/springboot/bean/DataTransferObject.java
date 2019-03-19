@@ -22,8 +22,9 @@ package com.lq186.common.springboot.bean;
 
 import com.lq186.common.bean.EntityId;
 
-public interface DataTransferObject<T extends EntityId> {
+public interface DataTransferObject<T extends EntityId, DTO extends DataTransferObject> {
 
     T toEntity();
 
+    DTO fromEntity(T entity);
 }

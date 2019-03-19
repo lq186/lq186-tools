@@ -25,24 +25,29 @@ import org.springframework.beans.BeanUtils;
 
 import java.lang.reflect.ParameterizedType;
 
-public abstract class AbstractDataTransferObject<T extends EntityId> implements DataTransferObject<T> {
-
-    public AbstractDataTransferObject(T entity) {
-        BeanUtils.copyProperties(entity, this);
-        afterProperties(entity);
-    }
+public abstract class AbstractDataTransferObject<T extends EntityId, DTO extends AbstractDataTransferObject> implements DataTransferObject<T, DTO> {
 
     public T toEntity() throws RuntimeException {
         Class<T> classOfT = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         try {
             T instanceOfT = classOfT.newInstance();
             BeanUtils.copyProperties(this, instanceOfT);
+            this.afterProperties((DTO) this);
             return instanceOfT;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+    @Override
+    public DTO fromEntity(T entity) {
+        BeanUtils.copyProperties(entity, this);
+        this.afterProperties(entity);
+        return (DTO) this;
+    }
+
     protected abstract void afterProperties(T entity);
+
+    protected abstract void afterProperties(DTO dto);
 
 }
