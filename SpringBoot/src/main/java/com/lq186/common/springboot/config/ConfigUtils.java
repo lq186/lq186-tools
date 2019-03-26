@@ -44,6 +44,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -110,6 +111,8 @@ public final class ConfigUtils {
 
     public static final List<HttpMessageConverter<?>> getHttpMessageConverters(ObjectMapper objectMapper) {
         List<HttpMessageConverter<?>> converters = new ArrayList<>();
+        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
+        converters.add(stringHttpMessageConverter);
         MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
         mappingJackson2HttpMessageConverter.setObjectMapper(objectMapper);
         converters.add(mappingJackson2HttpMessageConverter);
