@@ -37,12 +37,18 @@ public final class RestUtils {
     public static final <T> RestResponseBody<T> exchange(RestTemplate restTemplate, RestRequestBody requestBody, Class<T> classOfT) {
         Objects.requireNonNull(restTemplate, "restTemplate");
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
         if (!StringUtils.isEmpty(requestBody.getAuthorization())) {
             headers.add(Header.AUTHORIZATION, requestBody.getAuthorization());
         }
+
         if (requestBody.getHeaders() != null && requestBody.getHeaders().size() > 0) {
             requestBody.getHeaders().forEach(headers::add);
+        }
+
+        // 如果没有Content-Type 则默认使用 application/json;charset=utf-8
+        if (!headers.containsKey(HttpHeaders.CONTENT_TYPE)) {
+            headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         }
         String url = buildParameterUrl(requestBody.getUrl(), requestBody.getParameters());
         log.info(MessageFormat.format("Request for {0}", url));
