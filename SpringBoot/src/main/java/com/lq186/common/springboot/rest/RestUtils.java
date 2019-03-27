@@ -24,6 +24,7 @@ import com.lq186.common.consts.Header;
 import com.lq186.common.log.Log;
 import com.lq186.common.util.StringUtils;
 import org.springframework.http.*;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.MessageFormat;
@@ -34,7 +35,7 @@ public final class RestUtils {
 
     private static final Log log = Log.getLog(RestUtils.class);
 
-    public static final <T> RestResponseBody<T> exchange(RestTemplate restTemplate, RestRequestBody requestBody, Class<T> classOfT) {
+    public static final <T> RestResponseBody<Object> exchange(RestTemplate restTemplate, RestRequestBody requestBody, Class<T> classOfT) {
         Objects.requireNonNull(restTemplate, "restTemplate");
         HttpHeaders headers = new HttpHeaders();
 
@@ -54,9 +55,12 @@ public final class RestUtils {
         log.info(MessageFormat.format("Request for {0}", url));
 
         HttpEntity<Object> entity = new HttpEntity<>(requestBody.getBody(), headers);
-        ResponseEntity<T> responseEntity = restTemplate.exchange(url, requestBody.getMethod(), entity, classOfT);
-
-        return new RestResponseBody<>(responseEntity.getStatusCode(), responseEntity.getBody());
+        try {
+            ResponseEntity<T> responseEntity = restTemplate.exchange(url, requestBody.getMethod(), entity, classOfT);
+            return new RestResponseBody<>(responseEntity.getStatusCode(), responseEntity.getBody());
+        } catch (HttpClientErrorException e) {
+            return new RestResponseBody<>(e.getStatusCode(), e.getResponseBodyAsByteArray());
+        }
     }
 
     public static final String buildParameterUrl(String url, Map<String, String> paramsMap) {
